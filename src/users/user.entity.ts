@@ -15,22 +15,21 @@ export class User extends BaseEntity {
   @Column()
   role: string;
   @Column()
-  created_by_id: number;
+  created_by: string;
   @Column({ nullable: true })
-  updated_by_id: number;
+  updated_by: string;
   @Column({
     nullable: true,
     type: 'datetime',
     default: () => {
-      'CURRENT_DATETIME';
+      'CURRENT_TIMESTAMP';
     },
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updateAt: Date;
   @Column({
     type: 'datetime',
-    default: () => {
-      'CURRENT_TIMESTAMP';
-    },
+    default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
   @Column({ default: true })

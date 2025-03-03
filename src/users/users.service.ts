@@ -15,7 +15,29 @@ export class UsersService {
   getUsers() {
     return this.userRepository.find();
   }
-  getOneUser(id: number) {
-    return this.userRepository.findOneBy({ id: id });
+  async getOneUser(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+      select: [
+        'id',
+        'username',
+        'names',
+        'lastname',
+        'role',
+        'createdAt',
+        'state',
+        'created_by',
+      ],
+    });
+    return user;
+  }
+  getOneUserByUsername(username: string) {
+    return this.userRepository.findOneBy({ username: username });
+  }
+  updateOneUser(id: number, user: CreateUserDto) {
+    return this.userRepository.update(id, user);
+  }
+  blockUser(id: number) {
+    return this.userRepository.update(id, { state: false });
   }
 }
